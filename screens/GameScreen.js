@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { useState, useEffect } from "react";
+import { View, StyleSheet, Alert } from "react-native";
 import NumberContainer from "../components/game/NumberContainer";
+import Card from "../components/ui/Card";
+import InstructionsText from "../components/ui/InstructionsText";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 
@@ -20,13 +22,16 @@ function generateRandomBetween(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen({ userNumber }) {
-  const initialGuess = generateRandomBetween(
-    minBoundary,
-    maxBoundary,
-    userNumber
-  );
+function GameScreen({ userNumber, onGameOver }) {
+  const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
+  // useEffect triggers whenever state variable changes
+  useEffect(() => {
+    if (currentGuess === userNumber) {
+      onGameOver();
+    }
+  }, [currentGuess, userNumber, onGameOver]);
 
   function nextGuessHandler(direction) {
     if (
@@ -58,8 +63,10 @@ function GameScreen({ userNumber }) {
     <View style={styles.container}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <View>
-        <Text>Higer or lower? + -</Text>
+      <Card>
+        <InstructionsText style={styles.instructionsText}>
+          Higer or lower?
+        </InstructionsText>
         <View style={styles.buttonsLayout}>
           <View style={styles.buttonLayout}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
@@ -72,7 +79,7 @@ function GameScreen({ userNumber }) {
             </PrimaryButton>
           </View>
         </View>
-      </View>
+      </Card>
       <View>{/* results */}</View>
     </View>
   );
@@ -100,5 +107,8 @@ const styles = StyleSheet.create({
   },
   buttonLayout: {
     flex: 1,
+  },
+  instructionsText: {
+    marginBottom: 20,
   },
 });
