@@ -35,7 +35,7 @@ function StartGameScreen({ onPickNumber }) {
 
   return (
     <View style={styles.titleContainer}>
-      <Title>Guess My Number</Title>
+      <Title style={styles.titleStyle}>Guess My Number</Title>
       <Card>
         <InstructionsText>Enter a Number</InstructionsText>
         {/* value from text input is always a string */}
@@ -87,5 +87,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 100,
     alignItems: "center",
+  },
+  titleStyle: {
+    borderColor: "transparent",
   },
 });
