@@ -8,7 +8,7 @@ import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 
-import Colors from "./constants/colors";
+import Colors from "./constants/colors.ios";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
